@@ -62,15 +62,49 @@ public class Main {
     }
 
     public static int totalProfitOnDay(int month, int day) {
-        return 1234;
+        if(month<0 || month>11 || day<1 || day>28){
+            return -99999;
+        }
+        int total =0;
+        for(int c = 0;c < commodities.length;c++){
+            total += profits[month][day -1][c];
+        }
+        // made it day - 1 because it says the input is from 1 to 28 but array indeks is 0-27
+        return total;
     }
 
     public static int commodityProfitInRange(String commodity, int from, int to) {
-        return 1234;
+        int c = -1;
+        for(int i = 0;i< commodities.length;i++){
+           if(commodities[i].equals(commodity)) c = i;
+        }
+        if(c == -1 || from < 1 || to <1 || to > 28 || from > to) {
+            return -99999;
+        }
+        int total=0;
+        for(int m =0;m<MONTHS;m++){
+            for(int f =from;f <= to;f++){
+                total += profits[m][f-1][c];
+            }
+        }
+        return total;
     }
 
-    public static int bestDayOfMonth(int month) { 
-        return 1234; 
+    public static int bestDayOfMonth(int month) {
+        if(month<0 || month>11)return -1;
+        int bestDay =1;
+        int bestProfit=Integer.MIN_VALUE; // so that any profit in day 1 is still bigger than this initializing value.
+        for(int d =1;d<=28;d++){
+            int dailyP=0;
+            for(int c =0;c<commodities.length;c++){
+                dailyP += profits[month][d-1][c];
+            }
+            if(dailyP > bestProfit){
+                bestDay =d;
+                bestProfit = dailyP;
+            }
+        }
+        return bestDay;
     }
     
     public static String bestMonthForCommodity(String comm) { 
