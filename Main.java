@@ -107,8 +107,28 @@ public class Main {
         return bestDay;
     }
     
-    public static String bestMonthForCommodity(String comm) { 
-        return "DUMMY"; 
+    public static String bestMonthForCommodity(String comm) {
+        int c=-1;
+        for(int i = 0;i<commodities.length;i++){
+            if(commodities[i].equals(comm)){
+                c=i;
+                break;
+            }
+        }
+        if(c==-1)return "INVALID_COMMODITY";
+        int bestM=0;
+        int bestProfit=Integer.MIN_VALUE;
+        for(int m=0;m <months.length;m++){
+            int total=0;
+            for(int d=0;d < 28;d++){
+                total += profits[m][d][c];
+            }
+            if(total>bestProfit){
+                bestM=m;
+                bestProfit=total;
+            }
+        }
+        return months[bestM];
     }
 
     public static int consecutiveLossDays(String comm) { 
