@@ -19,6 +19,7 @@ public class Main {
         for(int m = 0;m < months.length;m++) {
         try{
             Scanner sc = new Scanner(Paths.get("Data_Files/" + months[m]+".txt"));
+            sc.nextLine(); // because of the "month,day,commodities" line at first.
             while(sc.hasNextLine()){
                 String[] words = sc.nextLine().split(",");
                 int day = Integer.parseInt(words[0]); // day - com - profit sırası oldugu ıcın ayırıp okuyorum
@@ -218,8 +219,22 @@ public class Main {
         }
     }
     
-    public static String bestWeekOfMonth(int month) { 
-        return "DUMMY"; 
+    public static String bestWeekOfMonth(int month) {
+        if(month<0 || month >11) return "INVALID_MONTH";
+        int bestWeek=-1;
+        int bestProfit= Integer.MIN_VALUE;
+        for(int w =1;w<=(DAYS/7);w++){
+            int week=0;
+            for(int i =0;i<7;i++){
+                week += totalProfitOnDay(month,(w-1)*7 + i + 1); // +1 because method takes 1 more than the index.
+            }
+            if(week>bestProfit){
+                bestWeek=w;
+                bestProfit=week;
+            }
+        }
+
+        return "Week " + bestWeek;
     }
 
     public static void main(String[] args) {
