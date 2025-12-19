@@ -177,8 +177,17 @@ public class Main {
         return aboveThreshold;
     }
 
-    public static int biggestDailySwing(int month) { 
-        return 1234; 
+    public static int biggestDailySwing(int month) {
+        if(month<0 || month>11)return -99999;
+        int biggestSwing=0;
+        int swing;
+        for(int d =2;d<29;d++){ // d input is one more than 1 -27 because totalProfıt day's day ınput ıs 1 plus of the array index.
+            swing = Math.abs(totalProfitOnDay(month,d) - totalProfitOnDay(month,d-1));
+            if(swing>biggestSwing){
+                biggestSwing=swing;
+            }
+        }
+        return biggestSwing;
     }
     
     public static String compareTwoCommodities(String c1, String c2) { 
