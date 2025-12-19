@@ -190,8 +190,32 @@ public class Main {
         return biggestSwing;
     }
     
-    public static String compareTwoCommodities(String c1, String c2) { 
-        return "DUMMY is better by 1234"; 
+    public static String compareTwoCommodities(String c1, String c2) {
+        int c_1 = -1;
+        int c_2 = -1;
+        for(int i = 0;i< commodities.length;i++){
+            if(commodities[i].equals(c1)) c_1 = i;
+            if(commodities[i].equals(c2)) c_2 = i;
+
+        }
+        if(c_1 == -1 || c_2 == -1) {
+            return "INVALID_COMMODITY";
+        }
+        int total1=0;
+        int total2=0;
+        for(int m =0;m<MONTHS;m++){
+            for(int d=0;d<28;d++){
+                total1 += profits[m][d][c_1];
+                total2 += profits[m][d][c_2];
+            }
+        }
+        if(total1 > total2){
+            return c1 + " is better by " + (total1 - total2);
+        }else if(total1 < total2){
+            return c2 + " is better by " + (total2 - total1);
+        }else{
+            return "Equal";
+        }
     }
     
     public static String bestWeekOfMonth(int month) { 
