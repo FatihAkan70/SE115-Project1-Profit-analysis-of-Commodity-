@@ -19,7 +19,6 @@ public class Main {
         for(int m = 0;m < months.length;m++) {
         try{
             Scanner sc = new Scanner(Paths.get("Data_Files/" + months[m]+".txt"));
-
             while(sc.hasNextLine()){
                 String[] words = sc.nextLine().split(",");
                 int day = Integer.parseInt(words[0]); // day - com - profit sırası oldugu ıcın ayırıp okuyorum
@@ -35,7 +34,6 @@ public class Main {
                 if(c!=-1){
                     profits[m][day-1][c] = profit;
                 }
-
             }
             sc.close();
         }catch(Exception e){}
@@ -158,8 +156,25 @@ public class Main {
         return longestStreak;
     }
     
-    public static int daysAboveThreshold(String comm, int threshold) { 
-        return 1234; 
+    public static int daysAboveThreshold(String comm, int threshold) {
+        int c=-1;
+        for(int i = 0;i<commodities.length;i++){
+            if(commodities[i].equals(comm)){
+                c=i;
+                break;
+            }
+        }
+        if(c==-1)return -1;
+
+        int aboveThreshold=0;
+        for(int m = 0;m<12;m++){
+            for(int d=0;d<28;d++){
+                if(profits[m][d][c] >threshold){
+                    aboveThreshold++;
+                }
+            }
+        }
+        return aboveThreshold;
     }
 
     public static int biggestDailySwing(int month) { 
