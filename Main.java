@@ -131,8 +131,31 @@ public class Main {
         return months[bestM];
     }
 
-    public static int consecutiveLossDays(String comm) { 
-        return 1234; 
+    public static int consecutiveLossDays(String comm) {
+        int c=-1;
+        for(int i = 0;i<commodities.length;i++){
+            if(commodities[i].equals(comm)){
+                c=i;
+                break;
+            }
+        }
+        if(c==-1)return -1;
+        int longestStreak=0;
+        int streak=0;
+        for(int m = 0;m<12;m++){
+            for(int d=0;d<28;d++){
+                if(profits[m][d][c] < 0){
+                    streak++;
+                    if(streak > longestStreak){
+                        longestStreak=streak;
+                    }
+                }
+                else{
+                    streak=0;
+                }
+            }
+        }
+        return longestStreak;
     }
     
     public static int daysAboveThreshold(String comm, int threshold) { 
